@@ -70,13 +70,16 @@ def fetch_prices(tickers: list[str], period: str = "5d") -> pd.DataFrame:
 
 
 if __name__ == "__main__":
+    from db.repository import upsert_prices
+
     df = fetch_prices(TICKERS)
     logger.info(f"Fetched {len(df)} rows across {df['ticker'].nunique()} tickers.")
+    upsert_prices(df)
 
     # temporary: save to CSV until Phase 3 wires up the database.
-    import os
+    # import os
 
-    os.makedirs("data", exist_ok=True)
-    filename = f"data/prices_{datetime.now().strftime('%Y%m%d')}.csv"
-    df.to_csv(filename, index=False)
-    logger.info(f"Saved to {filename}")
+    # os.makedirs("data", exist_ok=True)
+    # filename = f"data/prices_{datetime.now().strftime('%Y%m%d')}.csv"
+    # df.to_csv(filename, index=False)
+    # logger.info(f"Saved to {filename}")

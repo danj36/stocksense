@@ -67,12 +67,15 @@ def fetch_news(query: str = "stock_market", page_size: int = 30) -> list[dict]:
 
 
 if __name__ == "__main__":
+    from db.repository import upsert_news
+
     articles = fetch_news()
+    upsert_news(articles)
 
-    import json
+    # import json
 
-    os.makedirs("data", exist_ok=True)
-    filename = f"data/news_{datetime.now().strftime('%Y%m%d')}.json"
-    with open(filename, "w", encoding="utf-8") as f:
-        json.dump(articles, f, indent=2)
-    logger.info(f"Saved to {filename}")
+    # os.makedirs("data", exist_ok=True)
+    # filename = f"data/news_{datetime.now().strftime('%Y%m%d')}.json"
+    # with open(filename, "w", encoding="utf-8") as f:
+    #     json.dump(articles, f, indent=2)
+    # logger.info(f"Saved to {filename}")
