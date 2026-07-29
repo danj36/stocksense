@@ -69,6 +69,7 @@ services:
       AIRFLOW__WEBSERVER__SECRET_KEY: "a_local_dev_secret_change_me"
       DATABASE_URL: postgresql://stocksense:stocksense@postgres:5432/stocksense
       PYTHONPATH: /opt/airflow 
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
     volumes:
       - ./dags:/opt/airflow/dags
       - ./ingestion:/opt/airflow/ingestion
@@ -93,7 +94,8 @@ services:
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
       AIRFLOW__WEBSERVER__SECRET_KEY: "a_local_dev_secret_change_me"
       DATABASE_URL: postgresql://stocksense:stocksense@postgres:5432/stocksense
-      PYTHONPATH: /opt/airflow          # ← add this
+      PYTHONPATH: /opt/airflow 
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
     volumes:
       - ./dags:/opt/airflow/dags
       - ./ingestion:/opt/airflow/ingestion

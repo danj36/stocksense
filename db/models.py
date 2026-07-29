@@ -1,4 +1,12 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime, UniqueConstraint
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+    Float,
+    DateTime,
+    UniqueConstraint,
+    Boolean,
+)
 from db.database import Base
 
 
@@ -29,3 +37,5 @@ class NewsArticle(Base):
         String, unique=True
     )  # natural dedup key - same article can't be inserted twice
     published_at = Column(DateTime)
+    sentiment_score = Column(Float, nullable=True)  # -1.0 to 1.0, Gemini-scored
+    market_relevant = Column(Boolean, nullable=True)

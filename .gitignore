@@ -16,3 +16,4 @@ venv/
 #Data (we don't commit ingested data)
 data/
 *.db
+ml/artifacts/

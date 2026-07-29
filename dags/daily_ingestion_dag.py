@@ -22,6 +22,12 @@ def run_fetch_news():
     upsert_news(articles)
 
 
+def run_score_sentiment():
+    from ml.sentiment import score_unscored_articles
+
+    score_unscored_articles()
+
+
 def check_data_quality():
     """A simple sanity check task — did today's ingestion actually produce rows?"""
     from db.database import SessionLocal
@@ -88,9 +94,15 @@ with DAG(
         python_callable=run_fetch_news,
     )
 
+    score_sentiment_task = PythonOperator(
+        task_id="score_sentiment",
+        python_callable=run_score_sentiment,
+    )
+
     quality_check_task = PythonOperator(
         task_id="data_quality_check",
         python_callable=check_data_quality,
     )
 
-    [fetch_prices_task, fetch_news_task] >> quality_check_task
+    fetch_news_task >> score_sentiment_task
+    [fetch_prices_task, score_sentiment_task] >> quality_check_task
