@@ -12,3 +12,8 @@ Python, PostgreSQL, Apache Airflow, FastAPI, Streamlit, Docker, Kubernetes
 - localhost inside a container ≠ localhost on your host — containers reach each other via service name on Docker's internal network
 - load_dotenv() doesn't override already-set env vars — so Compose-level environment: values win over .env file values inside containers
 - PYTHONPATH controls where Python looks for importable packages, and it's not automatically inherited from "wherever your code happens to sit" the way it is when you run scripts locally from your project root
+
+
+## Running Locally
+- API: `uvicorn api.main:app --reload --port 8000`
+- UI: `python -m streamlit run ui/app.py`

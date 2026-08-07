@@ -9,3 +9,6 @@ joblib
 
 fastapi
 uvicorn[standard]
+
+streamlit
+plotly
