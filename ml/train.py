@@ -16,21 +16,12 @@ from sklearn.metrics import (
 )
 from sklearn.preprocessing import StandardScaler
 
-from ml.features import load_prices, build_features
+from ml.features import build_features, load_prices, FEATURE_COLS
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s"
 )
 logger = logging.getLogger(__name__)
-
-FEATURE_COLS = [
-    "return_1d",
-    "return_5d",
-    "ma_ratio",
-    "volatility_5d",
-    "volume_change",
-    "avg_sentiment",
-]
 
 
 def time_based_split(df: pd.DataFrame, test_size: float = 0.2):

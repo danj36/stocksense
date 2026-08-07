@@ -61,11 +61,6 @@ def fetch_prices(tickers: list[str], period: str = "5d") -> pd.DataFrame:
     combined = pd.concat(all_rows, ignore_index=True)
     combined.columns = combined.columns.str.lower()
 
-    # combined = combined.rename(columns = {
-    #     "Date": "date", "Open": "open", "High": "high",
-    #     "Low":"low", "Close":"close", "Volume":"volume"
-    # })
-
     return combined[["ticker", "date", "open", "high", "low", "close", "volume"]]
 
 
