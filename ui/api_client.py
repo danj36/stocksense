@@ -4,8 +4,9 @@ Streamlit page code itself.
 """
 
 import requests
+import os
 
-API_BASE_URL = "http://localhost:8000"
+API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000")
 
 
 def get_prices(ticker: str, limit: int = 60) -> list[dict]:

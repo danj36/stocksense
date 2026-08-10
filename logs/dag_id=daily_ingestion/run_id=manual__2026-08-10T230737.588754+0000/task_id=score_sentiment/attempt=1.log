@@ -1,0 +1,22 @@
+[2026-08-10T23:07:47.909+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-08-10T23:07:48.063+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: daily_ingestion.score_sentiment manual__2026-08-10T23:07:37.588754+00:00 [queued]>
+[2026-08-10T23:07:48.120+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: daily_ingestion.score_sentiment manual__2026-08-10T23:07:37.588754+00:00 [queued]>
+[2026-08-10T23:07:48.129+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2026-08-10T23:07:48.196+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): score_sentiment> on 2026-08-10 23:07:37.588754+00:00
+[2026-08-10T23:07:48.215+0000] {standard_task_runner.py:64} INFO - Started process 180 to run task
+[2026-08-10T23:07:48.233+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'daily_ingestion', 'score_sentiment', 'manual__2026-08-10T23:07:37.588754+00:00', '--job-id', '73', '--raw', '--subdir', 'DAGS_FOLDER/daily_ingestion_dag.py', '--cfg-path', '/tmp/tmpohp2writ']
+[2026-08-10T23:07:48.250+0000] {standard_task_runner.py:91} INFO - Job 73: Subtask score_sentiment
+[2026-08-10T23:07:48.685+0000] {task_command.py:426} INFO - Running <TaskInstance: daily_ingestion.score_sentiment manual__2026-08-10T23:07:37.588754+00:00 [running]> on host 0f3e540bf178
+[2026-08-10T23:07:50.649+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='stocksense' AIRFLOW_CTX_DAG_ID='daily_ingestion' AIRFLOW_CTX_TASK_ID='score_sentiment' AIRFLOW_CTX_EXECUTION_DATE='2026-08-10T23:07:37.588754+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-08-10T23:07:37.588754+00:00'
+[2026-08-10T23:07:50.651+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-08-10T23:07:55.103+0000] {sentiment.py:84} INFO - Found 1 unscored articles.
+[2026-08-10T23:07:55.107+0000] {models.py:6586} INFO - AFC is enabled with max remote calls: 10.
+[2026-08-10T23:07:55.742+0000] {_client.py:1025} INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 200 OK"
+[2026-08-10T23:07:57.188+0000] {sentiment.py:92} INFO - [1/1] Scored article id=85: 0.20
+[2026-08-10T23:08:02.228+0000] {sentiment.py:103} INFO - Scored 1/1 articles successfully.
+[2026-08-10T23:08:02.231+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-08-10T23:08:02.234+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-08-10T23:08:02.253+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=daily_ingestion, task_id=score_sentiment, run_id=manual__2026-08-10T23:07:37.588754+00:00, execution_date=20260810T230737, start_date=20260810T230748, end_date=20260810T230802
+[2026-08-10T23:08:02.286+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-08-10T23:08:02.324+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-08-10T23:08:02.328+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

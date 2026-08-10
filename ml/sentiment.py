@@ -9,7 +9,9 @@ import time
 
 from dotenv import load_dotenv
 from google import genai
+from google.genai import types
 from pydantic import BaseModel
+
 
 load_dotenv()
 
@@ -50,10 +52,13 @@ def score_article(
         response = client.models.generate_content(
             model=MODEL_NAME,
             contents=prompt,
-            config={
-                "response_mime_type": "application/json",
-                "response_schema": SentimentResult,
-            },
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json",
+                response_schema=SentimentResult,
+                http_options=types.HttpOptions(
+                    timeout=30_000
+                ),  # 30 seconds, in milliseconds
+            ),
         )
         return SentimentResult.model_validate_json(response.text)
     except Exception as e:
@@ -78,19 +83,21 @@ def score_unscored_articles() -> int:
         )
         logger.info(f"Found {len(unscored)} unscored articles.")
 
-        for article in unscored:
+        for i, article in enumerate(unscored, start=1):
             result = score_article(client, article.title, article.description)
             if result is not None:
                 article.sentiment_score = result.sentiment_score
                 article.market_relevant = result.market_relevant
                 scored_count += 1
+                logger.info(
+                    f"[{i}/{len(unscored)}] Scored article id={article.id}: {result.sentiment_score:.2f}"
+                )
             else:
-                # leave as NULL rather than guessing - we can retry it tomorrow.
                 logger.warning(
-                    f"Skipping article id = {article.id}, will retry next run."
+                    f"[{i}/{len(unscored)}] Skipping article id={article.id}, will retry next run."
                 )
 
-            time.sleep(SECONDS_BETWEEN_CALLS)  # stay under rate limit
+            time.sleep(SECONDS_BETWEEN_CALLS)
 
         session.commit()
         logger.info(f"Scored {scored_count}/{len(unscored)} articles successfully.")

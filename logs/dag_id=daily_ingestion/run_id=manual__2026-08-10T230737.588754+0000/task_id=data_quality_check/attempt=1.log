@@ -1,0 +1,19 @@
+[2026-08-10T23:08:07.519+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-08-10T23:08:07.613+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: daily_ingestion.data_quality_check manual__2026-08-10T23:07:37.588754+00:00 [queued]>
+[2026-08-10T23:08:07.628+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: daily_ingestion.data_quality_check manual__2026-08-10T23:07:37.588754+00:00 [queued]>
+[2026-08-10T23:08:07.629+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2026-08-10T23:08:07.651+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): data_quality_check> on 2026-08-10 23:07:37.588754+00:00
+[2026-08-10T23:08:07.659+0000] {standard_task_runner.py:64} INFO - Started process 193 to run task
+[2026-08-10T23:08:07.663+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'daily_ingestion', 'data_quality_check', 'manual__2026-08-10T23:07:37.588754+00:00', '--job-id', '74', '--raw', '--subdir', 'DAGS_FOLDER/daily_ingestion_dag.py', '--cfg-path', '/tmp/tmp0ezvoktf']
+[2026-08-10T23:08:07.667+0000] {standard_task_runner.py:91} INFO - Job 74: Subtask data_quality_check
+[2026-08-10T23:08:07.743+0000] {task_command.py:426} INFO - Running <TaskInstance: daily_ingestion.data_quality_check manual__2026-08-10T23:07:37.588754+00:00 [running]> on host 0f3e540bf178
+[2026-08-10T23:08:08.639+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='stocksense' AIRFLOW_CTX_DAG_ID='daily_ingestion' AIRFLOW_CTX_TASK_ID='data_quality_check' AIRFLOW_CTX_EXECUTION_DATE='2026-08-10T23:07:37.588754+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-08-10T23:07:37.588754+00:00'
+[2026-08-10T23:08:08.642+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-08-10T23:08:08.727+0000] {logging_mixin.py:188} INFO - WARNING: no news articles published in the last 24hrs (total articles in DB: 17). Could be a quiet news day
+[2026-08-10T23:08:08.729+0000] {logging_mixin.py:188} INFO - Data quality check passed: 11 price rows today, 17 total news articles.
+[2026-08-10T23:08:08.731+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-08-10T23:08:08.733+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-08-10T23:08:08.756+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=daily_ingestion, task_id=data_quality_check, run_id=manual__2026-08-10T23:07:37.588754+00:00, execution_date=20260810T230737, start_date=20260810T230807, end_date=20260810T230808
+[2026-08-10T23:08:08.845+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-08-10T23:08:08.882+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-08-10T23:08:08.886+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
