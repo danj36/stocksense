@@ -67,7 +67,7 @@ services:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
       AIRFLOW__WEBSERVER__SECRET_KEY: "a_local_dev_secret_change_me"
-      DATABASE_URL: postgresql://stocksense:stocksense@postgres:5432/stocksense
+      DATABASE_URL: postgresql://stocksense:stocksense@18.117.251.77:5432/stocksense
       PYTHONPATH: /opt/airflow 
       GEMINI_API_KEY: ${GEMINI_API_KEY}
     volumes:
@@ -95,7 +95,7 @@ services:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
       AIRFLOW__WEBSERVER__SECRET_KEY: "a_local_dev_secret_change_me"
-      DATABASE_URL: postgresql://stocksense:stocksense@postgres:5432/stocksense
+      DATABASE_URL: postgresql://stocksense:stocksense@18.117.251.77:5432/stocksense
       PYTHONPATH: /opt/airflow 
       GEMINI_API_KEY: ${GEMINI_API_KEY}
     volumes:

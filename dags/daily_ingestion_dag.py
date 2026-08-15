@@ -29,42 +29,47 @@ def run_score_sentiment():
 
 
 def check_data_quality():
-    """A simple sanity check task — did today's ingestion actually produce rows?"""
+    from datetime import date, datetime, timedelta
+
     from db.database import SessionLocal
     from db.models import Price, NewsArticle
-    from datetime import date
 
     session = SessionLocal()
     try:
-        today_prices = session.query(Price).filter(Price.date >= date.today()).count()
-        total_news = session.query(NewsArticle).count()
-
-        if today_prices == 0:
+        # Check for recent price data (last 4 days) rather than exact "today" —
+        # markets don't trade on weekends/holidays, so "today" can legitimately have zero rows.
+        recent_cutoff = date.today() - timedelta(days=4)
+        recent_prices = session.query(Price).filter(Price.date >= recent_cutoff).count()
+        if recent_prices == 0:
             raise ValueError(
-                "No price rows found for today — ingestion may have silently failed upstream."
+                f"No price rows found in the last 4 days (since {recent_cutoff}) — "
+                f"ingestion may have silently failed upstream."
             )
 
-        # ---news check: sofw warning, since low/zero counts can be legitimate ---
+        # --- News check, unchanged ---
         cutoff = datetime.utcnow() - timedelta(hours=24)
         recent_news = (
             session.query(NewsArticle)
             .filter(NewsArticle.published_at >= cutoff)
             .count()
         )
+        total_news = session.query(NewsArticle).count()
 
         if recent_news == 0:
             print(
-                f"WARNING: no news articles published in the last 24hrs "
-                f"(total articles in DB: {total_news}). Could be a quiet news day"
+                f"WARNING: no news articles published in the last 24 hours "
+                f"(total articles in DB: {total_news}). Could be a quiet news day, "
+                f"a rate limit, or a query issue — worth a manual look if this repeats."
             )
         else:
             print(
-                f"news check: {recent_news} articles in the last 24hrs ({total_news} total)."
+                f"News check: {recent_news} articles in the last 24h ({total_news} total)."
             )
 
         print(
-            f"Data quality check passed: {today_prices} price rows today, {total_news} total news articles."
+            f"Data quality check passed: {recent_prices} price rows in the last 4 days."
         )
+
     finally:
         session.close()
 
