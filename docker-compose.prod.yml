@@ -1,0 +1,48 @@
+# docker-compose.prod.yml
+services:
+  postgres:
+    image: postgres:16
+    container_name: stocksense_postgres
+    environment:
+      POSTGRES_USER: stocksense
+      POSTGRES_PASSWORD: stocksense
+      POSTGRES_DB: stocksense
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U stocksense"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"   # bound to the EC2 box only — the security group is what actually blocks internet access
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: stocksense_api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://stocksense:stocksense@postgres:5432/stocksense
+    volumes:
+      - ./ml/artifacts:/app/ml/artifacts
+    ports:
+      - "8000:8000"
+
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile.ui
+    container_name: stocksense_ui
+    depends_on:
+      - api
+    environment:
+      API_BASE_URL: http://api:8000
+    ports:
+      - "8501:8501"
+
+volumes:
+  postgres_data:
