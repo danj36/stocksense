@@ -20,3 +20,5 @@ ml/artifacts/
 
 # Airflow runtime logs
 logs/
+
+stocksense-server.pem
