@@ -3,6 +3,7 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+files/
 
 # env & secrets 
 .env
@@ -22,3 +23,4 @@ ml/artifacts/
 logs/
 
 stocksense-server.pem
+stocksense.code-workspace
