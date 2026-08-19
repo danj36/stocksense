@@ -99,18 +99,24 @@ def _merge_sentiment(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def build_features(df: pd.DataFrame) -> pd.DataFrame:
-    """TRAINING features: includes next-day label. Drops the latest row per ticker
-    (no label exists for it yet) — this is expected and correct for training."""
     all_feats = []
     for ticker, g in df.groupby("ticker"):
         g = _compute_ticker_features(g)
         g["next_close"] = g["close"].shift(-1)
-        g["target"] = (g["next_close"] > g["close"]).astype(int)
+
+        # Compute target as float first so NaN survives the comparison —
+        # comparing NaN > x evaluates to False, not NaN, so we must handle
+        # the "no next day yet" case explicitly rather than relying on
+        # the comparison itself to propagate missingness.
+        g["target"] = (g["next_close"] > g["close"]).astype(float)
+        g.loc[g["next_close"].isna(), "target"] = float("nan")
+
         all_feats.append(g)
 
     result = pd.concat(all_feats, ignore_index=True)
     result = _merge_sentiment(result)
     result = result.dropna(subset=FEATURE_COLS + ["target"])
+    result["target"] = result["target"].astype(int)  # safe now — NaNs are already gone
     return result[["ticker", "date"] + FEATURE_COLS + ["target"]]
 
 

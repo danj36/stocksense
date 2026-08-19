@@ -12,3 +12,6 @@ uvicorn[standard]
 
 streamlit
 plotly
+
+pytest
+httpx
