@@ -6,8 +6,8 @@ Built as a hands-on learning project covering the full stack: Docker, Airflow, F
 ## Live Demo
 - Dashboard: http://18.117.251.77:8501/
 - API docs: http://18.117.251.77:8000/docs
-
-(Note: Airflow orchestration runs locally, not on the live server — see Architecture below for why.)
+## Screenshots: 
+See in folder screenshots
 
 ## Architecture
 
