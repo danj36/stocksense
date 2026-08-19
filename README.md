@@ -10,7 +10,6 @@ Built as a hands-on learning project covering the full stack: Docker, Airflow, F
 (Note: Airflow orchestration runs locally, not on the live server — see Architecture below for why.)
 
 ## Architecture
-## Architecture
 
 ```mermaid
 flowchart TB
